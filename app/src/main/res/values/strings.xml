@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Regions</string>
+    <string name="region">Регион</string>
+    <string name="city">Город</string>
+</resources>
