@@ -32,8 +32,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 
 class MainActivity : ComponentActivity() {
+    private var back: Boolean = false
     private val viewModel: MainViewModel by viewModels()
-    private var counter: Int = 0
     private var content: Region? = null
     private val ctx: Context = this
 
@@ -54,9 +54,9 @@ class MainActivity : ComponentActivity() {
                                 },
                                 navigationIcon = {
                                     IconButton(onClick = {
-                                        if (counter > 0) {
-                                            counter--
+                                        if (back) {
                                             navController.popBackStack()
+                                            back = false
                                         }
                                     }) {
                                         Icon(Icons.Filled.ArrowBack, "")
@@ -97,6 +97,7 @@ class MainActivity : ComponentActivity() {
         navController: NavHostController,
         regions: LiveData<List<Region?>>
     ) {
+        back = false
         val regionItems: List<Region?> by regions.observeAsState(listOf())
         LazyColumn(
             modifier = Modifier
@@ -166,7 +167,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun ItemComposable() {
-        counter++
+        back = true
         Scaffold(modifier = Modifier.padding(16.dp), content = {
             Column(
                 modifier = Modifier.fillMaxSize(),
